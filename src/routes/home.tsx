@@ -76,7 +76,7 @@ function HomePage() {
     damping: 30,
   });
 
-  const activeBrief = activeTopic && brief?.briefs[activeTopic];
+  const activeBrief = activeTopic ? brief?.briefs[activeTopic] ?? null : null;
   const activeColor = activeTopic ? topicColor(activeTopic) : "#00ff9d";
 
   const generate = async (topicId: string) => {
