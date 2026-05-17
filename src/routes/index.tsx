@@ -1,26 +1,17 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Navigate } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
+import { useAppStore } from "@/store/useAppStore";
 
 export const Route = createFileRoute("/")({
-  component: Index,
+  component: Gate,
 });
 
-// IMPORTANT: Replace this placeholder. For sites with multiple pages (About, Services, Contact, etc.),
-// create separate route files (about.tsx, services.tsx, contact.tsx) — don't put all pages in this file.
-function PlaceholderIndex() {
-  return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
-    </div>
-  );
-}
-
-function Index() {
-  return <PlaceholderIndex />;
+function Gate() {
+  const [mounted, setMounted] = useState(false);
+  const done = useAppStore((s) => s.hasCompletedOnboarding);
+  useEffect(() => setMounted(true), []);
+  if (!mounted) {
+    return <div className="min-h-dvh bg-[#0a0a0f]" />;
+  }
+  return <Navigate to={done ? "/home" : "/onboarding"} replace />;
 }
