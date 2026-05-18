@@ -1,0 +1,8 @@
+:{$PORT:3000} {
+	root * dist/client
+	encode gzip zstd
+
+	# TanStack routes need SPA fallback when hosted as static assets.
+	try_files {path} /index.html
+	file_server
+}
